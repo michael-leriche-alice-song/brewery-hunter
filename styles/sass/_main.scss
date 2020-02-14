@@ -3,9 +3,19 @@ form{
     margin: 0 auto;
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
 }
 
-// input[type="text"],
-// {
-//     width: 50%;
-// }
+input[type="text"],
+select {
+    width: 40%;
+}
+fieldset,
+button {
+    width: 50%;
+}
+button {
+    text-transform: uppercase;
+    padding: 15px 25px;
+    border-radius: 3px;
+}
