@@ -1,42 +1,54 @@
-const breweryApp = {};
+const movieApp = {
+    api_key: '3058422e0d59745070d03d9b781c0d40'
+};
 
-breweryApp.breweryData = function(){ 
-    $.ajax('https://api.openbrewerydb.org/breweries',{
-        method:"GET",
-        dataType:'json'
-    }).then(function(){
-        console.log('it works')
+movieApp.displayMovie = function(listOfMovies){
+    listOfMovies.forEach(function(movie){
+        // console.log(movie);
+        // const title = $('<h3>').text(movie.original_title)
+        // console.log(title)
     })
 }
 
-breweryApp.userInput = function(){
+movieApp.movieData = function (language, genre, releaseDecade, runtime){ 
+    $.ajax('https://api.themoviedb.org/3/discover/movie?',{
+        method:"GET",
+        dataType:'json',
+        data:{
+            api_key:movieApp.api_key,
+            with_original_language: language,
+            with_genres: genre,
+            year: releaseDecade,
+            witn_runtime: runtime
+        }
+    }).then(function(result){
+        movieApp.displayMovie(result.results)
+        //get a array of movies that meets the stardards
+    })
+}
+//the thing is I cannot come up with way that allow me find multiple year at a time
+
+
+movieApp.userInput = function(){
     $('button').on('click', function (event) {
         event.preventDefault();
         const userInput = $('form').serializeArray();
-        console.log(userInput)
-        let userForm = {'specialRequirement':""}
-        userInput.forEach(function(index){
-            if(index.name === 'city'){
-                userForm['city'] = index.value
-            }else if(index.name === 'breweryType'){
-                userForm['breweryType'] = index.value
-            }else{
-                userForm['specialRequirement'] = userForm['specialRequirement'] + index.value + ' ';
-            }
-        })
-        // console.log(userForm.specialRequirement)
-        
-        breweryApp.breweryData()
+        console.log(userInput.length)
+        const language = userInput[0].value
+        const genre = userInput[1].value
+        const releaseDecade = userInput[2].value 
+        const runtime = userInput[3].value
+        movieApp.movieData(language, genre, releaseDecade, runtime)
     })
 }
 
-breweryApp.init = function(){
-    breweryApp.userInput()
+movieApp.init = function(){
+    movieApp.userInput()
 }
 
 //document ready
 $(function(){
-    breweryApp.init();
+    movieApp.init();
 })
 
 
