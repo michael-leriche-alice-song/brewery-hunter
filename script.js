@@ -1,10 +1,32 @@
 const breweryApp = {};
 
+breweryApp.breweryData = function(){ 
+    $.ajax('https://api.openbrewerydb.org/breweries',{
+        method:"GET",
+        dataType:'json'
+    }).then(function(){
+        console.log('it works')
+    })
+}
+
 breweryApp.userInput = function(){
     $('button').on('click', function (event) {
         event.preventDefault();
         const userInput = $('form').serializeArray();
         console.log(userInput)
+        let userForm = {'specialRequirement':""}
+        userInput.forEach(function(index){
+            if(index.name === 'city'){
+                userForm['city'] = index.value
+            }else if(index.name === 'breweryType'){
+                userForm['breweryType'] = index.value
+            }else{
+                userForm['specialRequirement'] = userForm['specialRequirement'] + index.value + ' ';
+            }
+        })
+        // console.log(userForm.specialRequirement)
+        
+        breweryApp.breweryData()
     })
 }
 
