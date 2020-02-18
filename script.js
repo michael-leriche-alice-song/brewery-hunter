@@ -4,13 +4,17 @@ const movieApp = {
 
 movieApp.displayMovie = function(listOfMovies){
     listOfMovies.forEach(function(movie){
-        // console.log(movie);
-        // const title = $('<h3>').text(movie.original_title)
-        // console.log(title)
+            const moviePoster = $('<img>').attr('src',`https://image.tmdb.org/t/p/w300/${movie.poster_path}`);
+            const title = $('<h2>').text(movie.title)
+            const overview = $('<p>').text(movie.overview);
+            const movieTitleOverview = $('<div>').addClass('text-styling').append(title, overview)
+            const appendToHtml = $('<div>').addClass('movie-details').append(moviePoster, movieTitleOverview)
+            $('.result').append(appendToHtml)
+            console.log(movie)
     })
 }
 
-movieApp.movieData = function (language, genre, releaseDecade, runtime){ 
+movieApp.movieData = function (language, genre, startDate,endDate, runtime){ 
     $.ajax('https://api.themoviedb.org/3/discover/movie?',{
         method:"GET",
         dataType:'json',
@@ -18,12 +22,23 @@ movieApp.movieData = function (language, genre, releaseDecade, runtime){
             api_key:movieApp.api_key,
             with_original_language: language,
             with_genres: genre,
-            year: releaseDecade,
-            witn_runtime: runtime
+            // `primary_release_date.gte`: startDate,
+            // `primary_release_date.lte`: endDate
+            // with_runtime_lte: runtime,
         }
     }).then(function(result){
-        movieApp.displayMovie(result.results)
-        //get a array of movies that meets the stardards
+        result.results.filter(function(item){
+        //code will go here
+        }) 
+        // console.log(result.results.runtime)
+        
+        movieApp.displayMovie(result.results.slice(0,10));
+
+
+
+        // console(result.results[0]releaseDate)
+
+        //get a array of movies that meets the standards
     })
 }
 //the thing is I cannot come up with way that allow me find multiple year at a time
@@ -36,9 +51,11 @@ movieApp.userInput = function(){
         console.log(userInput.length)
         const language = userInput[0].value
         const genre = userInput[1].value
-        const releaseDecade = userInput[2].value 
+        const startDate = `${userInput[2].value}-01-01`
+        const endDate = `${Number(userInput[2].value) + 10}-12-31`
         const runtime = userInput[3].value
-        movieApp.movieData(language, genre, releaseDecade, runtime)
+        movieApp.movieData(language, genre, startDate,endDate, runtime)
+        console.log(typeof(startDate))
     })
 }
 
@@ -50,6 +67,12 @@ movieApp.init = function(){
 $(function(){
     movieApp.init();
 })
+
+
+
+
+
+
 
 
 /*
