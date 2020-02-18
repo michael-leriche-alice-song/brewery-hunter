@@ -19,8 +19,12 @@ img {
     max-width: 1200px;
     margin: 0 auto;
 }
+h1 {
+    margin: 80px 0 20px 0;
+}
 
-h1, h2{
+
+h2 {
     margin: 0;
     padding: 0;
 }
@@ -59,4 +63,7 @@ form {
 option {
     color: black;
     font-size: 1.1rem;
+}
+form {
+    font-size: 1.5rem;
 }

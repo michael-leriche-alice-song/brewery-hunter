@@ -248,7 +248,11 @@ img {
   margin: 0 auto;
 }
 
-h1, h2 {
+h1 {
+  margin: 80px 0 20px 0;
+}
+
+h2 {
   margin: 0;
   padding: 0;
 }
@@ -295,6 +299,8 @@ option {
 }
 
 form {
+  font-size: 1.5rem;
+  width: 60%;
   margin: 0 auto;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -586,4 +592,22 @@ i:hover {
 footer {
   margin-top: 30px;
   text-align: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+input[type="text"],
+select {
+  width: 40%;
+}
+
+fieldset,
+button {
+  width: 50%;
+}
+
+button {
+  text-transform: uppercase;
+  padding: 15px 25px;
+  border-radius: 3px;
 }
