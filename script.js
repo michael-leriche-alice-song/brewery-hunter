@@ -22,11 +22,12 @@ movieApp.movieData = function (language, genre, startDate,endDate, runtime){
             api_key:movieApp.api_key,
             with_original_language: language,
             with_genres: genre,
-            // `primary_release_date.gte`: startDate,
-            // `primary_release_date.lte`: endDate
+            'primary_release_date.gte': startDate,
+            'primary_release_date.lte': endDate
             // with_runtime_lte: runtime,
         }
     }).then(function(result){
+        console.log(startDate, endDate)
         result.results.filter(function(item){
         //code will go here
         }) 
